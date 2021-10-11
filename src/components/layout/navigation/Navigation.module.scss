@@ -1,0 +1,56 @@
+.Header {
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+    background: rgb(22, 37, 50);
+}  
+
+.HeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 2rem 0 2rem;
+}
+
+.HeaderLogo {
+    & a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        
+        & img {
+            width: 50px;
+            height: 50px;
+            filter: invert(1);
+
+        }
+
+        & span {
+            color: white;
+            
+        }
+    }
+}
+
+.logIn {
+
+    text-decoration: none;
+
+    & span {
+        background-color: #FF4838;
+        color: black;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 10px;
+    }
+}
+
+.HeaderActive {
+    @extend .Header;
+    background-color: rgba(22, 37, 50,0.8);
+}

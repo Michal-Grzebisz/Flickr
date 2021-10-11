@@ -1,0 +1,69 @@
+.Gallery {
+    height: 100%;
+    padding-top: 4rem;
+    background: rgb(22, 37, 50);
+    display: flex;
+    flex-direction: column;
+}
+ 
+.GalleryButtons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+ 
+        & span {
+             font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            color: #FF4838
+        }
+}
+
+ .Grid_5_Columns {
+     display: grid;
+     grid-template-columns: repeat(5, 1fr);
+     grid-auto-rows: minmax(100px, 500px);
+     grid-auto-flow: dense;
+  
+ 
+     @media (max-width: 500px) {
+             display: grid;
+             grid-template-columns: repeat(1, 1fr);
+             grid-auto-rows: minmax(100px, 500px);
+             grid-auto-flow: dense;
+         }
+ }
+ 
+ .Grid_3_Columns {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     grid-auto-rows: minmax(100px, 500px);
+     grid-auto-flow: dense;
+ 
+     @media (max-width: 500px) {
+         display: grid;
+         grid-template-columns: repeat(1, 1fr);
+         grid-auto-rows: minmax(100px, 500px);
+         grid-auto-flow: dense;
+     }
+ }
+
+     
+ .LoaderContainer {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+ 
+ 
+ .BtnGrid {
+     cursor: pointer;
+     margin-left: 0.5rem;
+     margin-right: 0.5rem;
+     font-size: 1.5;
+     font-weight: bold;
+ }
+ 

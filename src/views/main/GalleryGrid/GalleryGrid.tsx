@@ -69,7 +69,7 @@ export const GalleryGrid: React.FC = () => {
                                     </div>}
             {status === 'error' && <span>Error: {error}</span>}
             {status === 'success' && (
-                <div>
+                <>
                     <div className={grid === 5 ? styles.Grid_5_Columns : styles.Grid_3_Columns}>
                         {data?.pages?.map(page => page.photo).flat().map((p,idx) => {
                                 const date = dayjs(new Date(parseInt(p.dateupload) * 1000)).format('DD/MM/YYYY')
@@ -107,7 +107,7 @@ export const GalleryGrid: React.FC = () => {
                         ? 'Background Updating...'
                         : null}
                     </div>
-                </div>
+                </>
             )}
         </section>
     )

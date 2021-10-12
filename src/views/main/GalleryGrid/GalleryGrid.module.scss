@@ -21,10 +21,14 @@
 }
 
  .Grid_5_Columns {
-     display: grid;
-     grid-template-columns: repeat(5, 1fr);
-     grid-auto-rows: minmax(100px, 500px);
-     grid-auto-flow: dense;
+    //  display: grid;
+    //  grid-template-columns: repeat(5, 1fr);
+    //  grid-auto-rows: minmax(100px, 500px);
+    //  grid-auto-flow: dense;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: minmax(100px, 500px);
+    width: 100%;
   
  
      @media (max-width: 500px) {

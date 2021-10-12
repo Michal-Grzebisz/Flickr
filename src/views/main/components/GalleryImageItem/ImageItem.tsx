@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback, lazy } from 'react'
 import styles from './GalleryImageItem.module.scss'
 import { Link } from 'react-router-dom'
-import { entries } from 'lodash'
+// import { entries } from 'lodash'
 
 interface ImageItemProxy {
     idx: number,
@@ -29,36 +29,61 @@ export const ImageItem = (proxy: ImageItemProxy) => {
         threshold: 0
     }
 
-    const imageObserver = new IntersectionObserver((entries, imageObserver)=> {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                setImgSrc(imageSrc)
 
-            }
-            
-        },
-        {
-            rootMargin: '0px',
-            threshold: 0,
-          }
-          )
-    })
+    // useEffect(() => {
+    //     const imageObserver = new IntersectionObserver((entries) => {
+    //         entries.forEach(entry => {
+    //             if(entry.isIntersecting) {
+    //                 return (
+    //                     <h1>dupa</h1>
+    //                 )
+    //             } else {
+    //                 <h1>dupa 2</h1>
+    //             }
+    //         })
+
+    //         if (rootRef.current) imageObserver.observe(rootRef.current);
+    //             return () => {
+    //         if (rootRef.current) imageObserver.unobserve(rootRef.current);
+    //       };
+    //     })
+
+    //     // console.log(imageObserver)
+    // })
 
     useEffect(() => {
-        const observer = new IntersectionObserver((entries: any) => {
-            const [entry] = entries;
-            console.log('log')
-            setIsVisible(entry.isIntersecting); 
+        const myFirstObserver = new IntersectionObserver((elements) => {
+            elements.forEach((element) => {
+                if(element.isIntersecting) {
+                    setImgSrc(imageSrc)
+                }
+            });
           }, options);
 
-        //   const rootRefCurrent = rootRef.current
-    
-          if (rootRef.current) observer.observe(rootRef.current);
-          return () => {
-            if (rootRef.current) observer.unobserve(rootRef.current);
+            if (rootRef.current) myFirstObserver.observe(rootRef.current);
+
+            return () => {
+            if (rootRef.current) myFirstObserver.unobserve(rootRef.current);
           };
 
+    
     })
+
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver((entries: any) => {
+    //         const [entry] = entries;
+    //         console.log('log')
+    //         setIsVisible(entry.isIntersecting); 
+    //       }, options);
+
+    //     //   const rootRefCurrent = rootRef.current
+    
+    //       if (rootRef.current) observer.observe(rootRef.current);
+    //       return () => {
+    //         if (rootRef.current) observer.unobserve(rootRef.current);
+    //       };
+
+    // })
    
     const onLoad = useCallback(() => {
        return(
@@ -68,17 +93,16 @@ export const ImageItem = (proxy: ImageItemProxy) => {
     
 
     return(
-        <Link className={styles.WrapFocus} to={`/image/${id}/${secret}`} key={idx}>
+        <Link ref={rootRef} className={styles.WrapFocus} to={`/image/${id}/${secret}`} key={idx}>
             <div ref={rootRef} className={styles.GalleryItem}>
                 {
-                    isVisible?  
                         <>
                             
                                 <div className={styles.Image}>
                                     <img ref={rootRef}
                                         onLoad={onLoad} 
                                         alt={title}
-                                        key={idx} src={imageSrc}/>
+                                        key={idx} src={imgSrc}/>
                                 </div>
                                 <div className={styles.GalleryText} >
                                     <span className={styles.ImageTitle} >{title}</span>
@@ -86,7 +110,7 @@ export const ImageItem = (proxy: ImageItemProxy) => {
                                     <span className={styles.ImageOwnerName}>{ownerName}</span>
                                 </div>
                             
-                        </> : <div className={styles.Unvisible}></div>
+                        </> 
                 }
             </div>
         </Link>

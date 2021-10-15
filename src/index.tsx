@@ -1,19 +1,27 @@
+import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import App from './App';
+import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 import reportWebVitals from './reportWebVitals';
-import { QueryClientProvider, QueryClient } from 'react-query'
 
 const reactQueryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={reactQueryClient}>
-      <App />
-    </QueryClientProvider>
+    <Router>
+      <Auth0ProviderWithHistory>
+        <QueryClientProvider client={reactQueryClient}>
+          <App />
+        </QueryClientProvider>
+      </Auth0ProviderWithHistory>
+    </Router>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

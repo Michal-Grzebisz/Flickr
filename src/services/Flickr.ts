@@ -102,7 +102,7 @@ class FlickrService {
     const stringifiedQueryParams = queryString.stringify(queryParams);
     const apiUrl = `${BASE_URL}?${stringifiedQueryParams}`;
 
-    console.log(apiUrl);
+    // console.log(apiUrl);
 
     return axios.get(apiUrl).then((response) => {
       // console.log("response",response)

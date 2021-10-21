@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 
 import { Layout } from '../../components/layout';
 import { useFlickrInfoPhoto } from '../../queries/useFlickr';
+import { addImage, getAlbum } from '../../services/deleteAlbum';
 import styles from './ImageDetails.module.scss';
 
 export const ImageDetailsView: React.FC = () => {
@@ -16,6 +17,10 @@ export const ImageDetailsView: React.FC = () => {
       {data ? (
         <>
           <section className={styles.imageInfo}>
+            <button onClick={() => getAlbum()}>Get Album</button>
+            <button className={styles.AddButton} onClick={() => addImage(data.id)}>
+              Add to Favourite
+            </button>
             <div className={styles.imageImage}>
               <div className={styles.imageText}>
                 <img

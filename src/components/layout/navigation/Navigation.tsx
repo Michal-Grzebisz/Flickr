@@ -7,7 +7,7 @@ import styles from './Navigation.module.scss';
 
 export const Navigation: React.FC = () => {
   const [navBar, setNavbar] = useState(false);
-  console.log('Render?');
+  // console.log('Render?');
 
   const changeBackground = () => {
     if (window.scrollY >= 80) {

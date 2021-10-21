@@ -87,11 +87,11 @@ export const ImageItem = (proxy: ImageItemProxy) => {
 
   return (
     <Link ref={rootRef} className={styles.WrapFocus} to={`/image/${id}/${secret}`} key={idx}>
-      <div ref={rootRef} className={styles.GalleryItem}>
+      <div className={styles.GalleryItem}>
         {
           <>
             <div className={styles.Image}>
-              <img ref={rootRef} onLoad={onLoad} alt={title} key={idx} src={imgSrc} />
+              <img onLoad={onLoad} alt={title} key={idx} src={imgSrc} />
             </div>
             <div className={styles.GalleryText}>
               <span className={styles.ImageTitle}>{title}</span>

@@ -1,7 +1,8 @@
 import './App.scss';
 
 import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import ProtectedRoute from './auth/protected-route';
@@ -11,39 +12,33 @@ import { MainView } from './views/main';
 import Profile from './views/profile';
 
 function App() {
-  const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
-  console.log(isLoading, 'isAuth', isAuthenticated);
-  const callSecureApi = async () => {
-    try {
-      const token = await getAccessTokenSilently();
+  const token = getAccessTokenSilently();
 
-      const response = await fetch('http://localhost:8080/api/users/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  console.log(token);
+  // const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  // console.log(isLoading, 'isAuth', isAuthenticated);
+  // const callSecureApi = async () => {
+  //   try {
+  //     const token = await getAccessTokenSilently();
 
-      const responseData = await response.json();
-      console.log(responseData);
+  //     const response = await fetch('http://localhost:8080/album', {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
 
-      console.log(token);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     const responseData = await response.json();
+  //     // console.log(responseData);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
+  //     // console.log(token);
+  //   } catch (error) {
+  //     // console.log(error);
+  //   }
+  // };
   return (
     <>
-      <div>
-        <button type='button' className='btn btn-primary' onClick={callSecureApi}>
-          Get Public Message
-        </button>
-      </div>
       <Switch>
         <Route exact path='/' component={MainView} />
         <Route exact path='/image/:id/:secret' component={ImageDetailsView} />

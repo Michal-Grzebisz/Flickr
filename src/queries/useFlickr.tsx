@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
 
 import { FlickrOptions, FlickrPhotosResponse, FlickrService } from '../services/Flickr';
 
@@ -22,9 +22,7 @@ export const useFlickrPhotos = (options: any) =>
     },
   );
 
-export const useFlickrInfoPhoto = (id: string, secret: string) =>
-  useQuery(['photo', id, secret], () => {
-    return FlickrService.getPhoto(id, secret);
+export const useFlickrInfoPhoto = (id: string) =>
+  useQuery(['photo', id], () => {
+    return FlickrService.getPhoto(id);
   });
-
-// useMutation

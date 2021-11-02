@@ -1,47 +1,46 @@
 import './App.scss';
 
 import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import ProtectedRoute from './auth/protected-route';
-import Loading from './components/loading';
+import { setAccessToken } from './services/axiosAPI';
+import { AlbumsView } from './views/albums';
+import { AlbumsDetailsView } from './views/albums-detail';
 import { ImageDetailsView } from './views/image-details';
 import { MainView } from './views/main';
 import Profile from './views/profile';
 
 function App() {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
+  const [isGettingToken, setIsGettingToken] = useState(false);
 
-  const token = getAccessTokenSilently();
+  useEffect(() => {
+    async function getAndSaveToken() {
+      if (isAuthenticated) {
+        // console.log('authenticated, getting token');
+        setIsGettingToken(true);
+        const token = await getAccessTokenSilently();
+        setAccessToken(token);
+        setIsGettingToken(false);
+      }
+    }
 
-  console.log(token);
-  // const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  // console.log(isLoading, 'isAuth', isAuthenticated);
-  // const callSecureApi = async () => {
-  //   try {
-  //     const token = await getAccessTokenSilently();
+    getAndSaveToken();
+  }, [isAuthenticated, getAccessTokenSilently, isLoading]);
 
-  //     const response = await fetch('http://localhost:8080/album', {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
+  if (isLoading || isGettingToken) {
+    return <div>Loading...</div>;
+  }
 
-  //     const responseData = await response.json();
-  //     // console.log(responseData);
-
-  //     // console.log(token);
-  //   } catch (error) {
-  //     // console.log(error);
-  //   }
-  // };
   return (
     <>
       <Switch>
         <Route exact path='/' component={MainView} />
         <Route exact path='/image/:id/:secret' component={ImageDetailsView} />
+        <ProtectedRoute exact path='/albums' component={AlbumsView} />
+        <Route exact path='/album/:id' component={AlbumsDetailsView} />
         <ProtectedRoute exact path='/profile' component={Profile} />
       </Switch>
     </>

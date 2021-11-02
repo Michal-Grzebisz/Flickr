@@ -89,14 +89,33 @@ class FlickrService {
     });
   }
 
-  public getPhoto(id: string, secret: string) {
+  public getPhoto(id: string) {
     const queryParams = {
       api_key: FLICKR_API_KEY,
       method: FlickrMethod.getInfo,
       format: 'json',
       nojsoncallback: '1',
       photo_id: id,
-      secret: secret,
+    };
+
+    const stringifiedQueryParams = queryString.stringify(queryParams);
+    const apiUrl = `${BASE_URL}?${stringifiedQueryParams}`;
+
+    // console.log(apiUrl);
+
+    return axios.get(apiUrl).then((response) => {
+      // console.log("response",response)
+      return response.data.photo;
+    });
+  }
+
+  public getPhoto2(id: string) {
+    const queryParams = {
+      method: FlickrMethod.getInfo,
+      api_key: FLICKR_API_KEY,
+      photo_id: id,
+      format: 'json',
+      nojsoncallback: '1',
     };
 
     const stringifiedQueryParams = queryString.stringify(queryParams);

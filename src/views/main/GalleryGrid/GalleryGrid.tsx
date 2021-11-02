@@ -1,20 +1,22 @@
+import { faColumns, faTh, faThLarge } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dayjs from 'dayjs';
 import { debounce } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { Loader } from '../../../components/loader/Loader';
 import { useFlickrPhotos } from '../../../queries/useFlickr';
 import { FlickrOptions } from '../../../services/Flickr';
-import { ImageItem } from '../components/GalleryImageItem/ImageItem';
+import { ImageItem } from '../components/GalleryImageItem/GalleryImageItem';
 import styles from './GalleryGrid.module.scss';
 
 export const GalleryGrid: React.FC = () => {
-  // Reanme to Request Params/ Filters
   const [options, setOptions] = useState<FlickrOptions>({
     per_page: 25,
     text: '',
   });
 
-  const [grid, setGrid] = useState<5 | 3>(5);
+  const [grid, setGrid] = useState<5 | 3>(3);
   const { status, data, error, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useFlickrPhotos(options);
 
   const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -48,26 +50,24 @@ export const GalleryGrid: React.FC = () => {
   const debouncedOnChange = debounce(updateSearchTerm, 200);
 
   return (
-    <section className={styles.Gallery}>
+    <section className={styles.GalleryContainer}>
       <div className={styles.GalleryButtons}>
-        <input type='text' placeholder='Search...' onChange={debouncedOnChange} />
-        <span>Pick number of columns:</span>
-        <button className={styles.BtnGrid} onClick={() => setGrid(3)}>
-          3
-        </button>
-        <button className={styles.BtnGrid} onClick={() => setGrid(5)}>
-          5
-        </button>
-      </div>
-      {status === 'loading' && (
-        <div className={styles.LoaderContainer}>
-          <div className='lds-dual-ring'></div>
+        <input type='text' placeholder='Search' onChange={debouncedOnChange} />
+        <div className={styles.GalleryButtonsContainer}>
+          <button onClick={() => setGrid(3)}>
+            <FontAwesomeIcon icon={faThLarge} />
+          </button>
+          <button onClick={() => setGrid(5)}>
+            {' '}
+            <FontAwesomeIcon icon={faTh} />
+          </button>
         </div>
-      )}
+      </div>
+      {status === 'loading' && <Loader />}
       {status === 'error' && <span>Error: {error}</span>}
       {status === 'success' && (
         <>
-          <div className={grid === 5 ? styles.Grid_5_Columns : styles.Grid_3_Columns}>
+          <div className={grid === 5 ? styles.GalleryGrid5 : styles.GalleryGrid3}>
             {data?.pages
               ?.map((page) => page.photo)
               .flat()
